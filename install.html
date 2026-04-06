@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Install Vachas AI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #0D0A06 0%, #1a1410 100%);
+      color: #F5E6C3;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .logo {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 48px;
+      box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
+    }
+    
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #D4AF37;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      color: #8B7355;
+      margin-bottom: 32px;
+    }
+    
+    .apk-info {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .apk-size {
+      font-size: 24px;
+      font-weight: 700;
+      color: #D4AF37;
+    }
+    
+    .apk-label {
+      font-size: 12px;
+      color: #8B7355;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .features {
+      text-align: left;
+      margin-bottom: 24px;
+    }
+    
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(139, 115, 85, 0.2);
+    }
+    
+    .feature-item:last-child {
+      border-bottom: none;
+    }
+    
+    .feature-icon {
+      width: 24px;
+      height: 24px;
+      background: rgba(212, 175, 55, 0.2);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+    
+    .feature-text {
+      font-size: 14px;
+      color: #F5E6C3;
+    }
+    
+    .download-btn {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+      color: #0D0A06;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 12px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+    }
+    
+    .download-btn.disabled {
+      background: #333;
+      color: #666;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    
+    .build-status {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .build-status.pending {
+      background: rgba(234, 179, 8, 0.1);
+      border-color: rgba(234, 179, 8, 0.3);
+    }
+    
+    .build-status.error {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+    
+    .status-text {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .status-text.ready {
+      color: #22C55E;
+    }
+    
+    .status-text.pending {
+      color: #EAB308;
+    }
+    
+    .status-text.error {
+      color: #EF4444;
+    }
+    
+    .qr-section {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+    
+    .qr-code {
+      width: 200px;
+      height: 200px;
+      background: #f0f0f0;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 12px;
+      border-radius: 8px;
+    }
+    
+    .qr-label {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .instructions {
+      text-align: left;
+      background: rgba(139, 115, 85, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 24px;
+    }
+    
+    .instructions h3 {
+      font-size: 14px;
+      color: #D4AF37;
+      margin-bottom: 12px;
+    }
+    
+    .instructions ol {
+      padding-left: 20px;
+      font-size: 13px;
+      color: #8B7355;
+      line-height: 1.8;
+    }
+    
+    .footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: #5a4a3a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">🕉️</div>
+    <h1>Vachas AI</h1>
+    <p class="subtitle">Learn Sanskrit Through AI</p>
+    
+    <div class="apk-info">
+      <div class="apk-size">299 MB</div>
+      <div class="apk-label">Initial Download</div>
+    </div>
+    
+    <div class="build-status pending" id="buildStatus">
+      <div class="status-text pending">⏳ Build Required</div>
+      <p style="font-size: 12px; color: #8B7355; margin-top: 8px;">
+        Run the build script to generate the APK
+      </p>
+    </div>
+    
+    <div class="features">
+      <div class="feature-item">
+        <div class="feature-icon">📚</div>
+        <div class="feature-text">Core Sanskrit Lessons</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-text">AI-Powered Quizzes</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🏆</div>
+        <div class="feature-text">Gamified Learning</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">☁️</div>
+        <div class="feature-text">+690MB Silent Downloads</div>
+      </div>
+    </div>
+    
+    <a href="#" class="download-btn disabled" id="downloadBtn">
+      Build APK First
+    </a>
+    
+    <div class="qr-section" style="display: none;" id="qrSection">
+      <div class="qr-code" id="qrCode">
+        QR Code will appear here
+      </div>
+      <div class="qr-label">Scan to download on mobile</div>
+    </div>
+    
+    <div class="instructions">
+      <h3>📋 Build Instructions</h3>
+      <ol>
+        <li>Open terminal in <code>vachas-ai-apk/</code> folder</li>
+        <li>Run: <code>node scripts/build-apk.js</code></li>
+        <li>Wait for build to complete (10-20 min)</li>
+        <li>APK will be in <code>android/app/build/outputs/apk/release/</code></li>
+        <li>Upload to your hosting or Play Store</li>
+      </ol>
+    </div>
+    
+    <div class="footer">
+      <p>Built with Expo & React Native</p>
+      <p>Optimized for India/Nepal markets</p>
+    </div>
+  </div>
+  
+  <script>
+    // Configuration - Update these after building
+    const APK_CONFIG = {
+      downloadUrl: '', // Set this to your APK URL after build
+      version: '1.0.0',
+      buildDate: null,
+      isBuilt: false
+    };
+    
+    // Check if APK is ready
+    function updateUI() {
+      const statusEl = document.getElementById('buildStatus');
+      const btnEl = document.getElementById('downloadBtn');
+      const qrEl = document.getElementById('qrSection');
+      
+      if (APK_CONFIG.isBuilt && APK_CONFIG.downloadUrl) {
+        statusEl.className = 'build-status';
+        statusEl.innerHTML = `
+          <div class="status-text ready">✅ Ready to Install</div>
+          <p style="font-size: 12px; color: #8B7355; margin-top: 8px;">
+            Version ${APK_CONFIG.version} • ${APK_CONFIG.buildDate}
+          </p>
+        `;
+        
+        btnEl.className = 'download-btn';
+        btnEl.href = APK_CONFIG.downloadUrl;
+        btnEl.download = 'vachas-ai.apk';
+        btnEl.textContent = '⬇️ Download APK';
+        
+        qrEl.style.display = 'block';
+        generateQRCode(APK_CONFIG.downloadUrl);
+      }
+    }
+    
+    // Simple QR code generator placeholder
+    function generateQRCode(url) {
+      const qrEl = document.getElementById('qrCode');
+      qrEl.innerHTML = `
+        <div style="text-align: center;">
+          <div style="font-size: 48px; margin-bottom: 8px;">📱</div>
+          <div style="font-size: 10px; color: #999; word-break: break-all;">
+            ${url.substring(0, 30)}...
+          </div>
+        </div>
+      `;
+    }
+    
+    // Initialize
+    updateUI();
+    
+    // Check for URL parameter to enable download
+    const urlParams = new URLSearchParams(window.location.search);
+    const apkUrl = urlParams.get('apk');
+    if (apkUrl) {
+      APK_CONFIG.downloadUrl = apkUrl;
+      APK_CONFIG.isBuilt = true;
+      APK_CONFIG.buildDate = new Date().toLocaleDateString();
+      updateUI();
+    }
+  </script>
+</body>
+</html>
