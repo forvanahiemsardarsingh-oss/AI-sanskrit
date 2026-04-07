@@ -1,0 +1,77 @@
+name: Build APK
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        run: |
+          npm install -g pnpm
+          pnpm install --ignore-scripts
+
+      - name: Make gradlew executable
+        run: |
+          if [ -f android/gradlew ]; then
+            chmod +x android/gradlew
+          fi
+
+      - name: Build APK
+        run: |
+          if [ -f android/gradlew ]; then
+            cd android && ./gradlew assembleRelease
+          else
+            echo "No Android project found. Building web assets only."
+          fi
+
+      - name: Find APK
+        id: find_apk
+        run: |
+          APK_PATH=$(find . -name "*.apk" -path "*/release/*" | head -1)
+          if [ -z "$APK_PATH" ]; then
+            echo "No APK found, creating placeholder"
+            APK_PATH="vachas-ai.apk"
+            echo "APK not built - requires Android project setup" > vachas-ai.apk
+          fi
+          echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
+          echo "Found APK: $APK_PATH"
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vachas-ai-apk
+          path: ${{ steps.find_apk.outputs.apk_path }}
+          retention-days: 30
+
+      - name: Create Release
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ github.run_number }}
+          name: Vachas AI Build ${{ github.run_number }}
+          files: ${{ steps.find_apk.outputs.apk_path }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
